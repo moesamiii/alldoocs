@@ -1,15 +1,9 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchDoctors } from "../../store/doctorsSlice";
+import React from "react";
+import { useSelector } from "react-redux";
 import DoctorCard from "../DoctorCard/DoctorCard";
 
 const DoctorsList = () => {
-  const dispatch = useDispatch();
   const { doctors, loading, error } = useSelector((state) => state.doctors);
-
-  useEffect(() => {
-    dispatch(fetchDoctors());
-  }, [dispatch]);
 
   if (loading) {
     return <div className="text-center">جارٍ التحميل...</div>;
