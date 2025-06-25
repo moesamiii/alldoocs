@@ -1,13 +1,12 @@
 import React from "react";
 import docsImage from "../../assets/docsimage.png";
 
-const DoctorCard = ({ name, specialization, rating }) => {
+const DoctorCard = ({ name, specialization, rating, image }) => {
   return (
     <div className="w-[240px] flex flex-col gap-2">
-      {/* img container  */}
       <div className="w-[240px] h-[186.25px] bg-[#023554] rounded-[9.38px] relative overflow-hidden">
         <img
-          src={docsImage}
+          src={image || docsImage}
           alt={name}
           className="w-full h-full object-cover"
         />
@@ -16,7 +15,6 @@ const DoctorCard = ({ name, specialization, rating }) => {
         </div>
       </div>
 
-      {/* name + specialization */}
       <div className="flex flex-col items-end w-full px-1">
         <span
           className="text-[#222222] font-medium text-[18px]"
@@ -32,7 +30,6 @@ const DoctorCard = ({ name, specialization, rating }) => {
         </span>
       </div>
 
-      {/* action */}
       <button
         className="w-[240px] h-[40px] border border-[#0798F1] rounded-[8px] text-[#0798F1] font-medium text-[18px] flex items-center justify-center"
         style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}

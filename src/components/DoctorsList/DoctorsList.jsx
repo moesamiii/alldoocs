@@ -1,7 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchDoctors } from "../../store/doctorsSlice";
 import DoctorCard from "../DoctorCard/DoctorCard";
 
 const DoctorsList = () => {
+  const dispatch = useDispatch();
+  const { doctors, loading, error } = useSelector((state) => state.doctors);
+
+  useEffect(() => {
+    dispatch(fetchDoctors());
+  }, [dispatch]);
+
+  if (loading) {
+    return <div className="text-center">جارٍ التحميل...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center text-red-500">حدث خطأ: {error}</div>;
+  }
+
   return (
     <div
       className="
@@ -14,78 +31,22 @@ const DoctorsList = () => {
         w-full
       "
     >
-      <DoctorCard
-        image="/path-to-image.jpg"
-        name="د/ محمد حكيم"
-        specialization="استشاري قلب وأوعية دموية"
-        rating="4.5"
-      />
-      <DoctorCard
-        image="/path-to-image.jpg"
-        name="د/ احمد احمد"
-        specialization="استشارية أعصاب"
-        rating="4.7"
-      />
-      <DoctorCard
-        image="/path-to-image.jpg"
-        name="د/ علي حيدر"
-        specialization="استشاري عظام"
-        rating="4.6"
-      />
-      <DoctorCard
-        image="/path-to-image.jpg"
-        name="د/ ليلى حسين"
-        specialization="استشارية جلدية"
-        rating="4.8"
-      />
-      <DoctorCard
-        image="/path-to-image.jpg"
-        name="د/ أحمد خالد"
-        specialization="استشاري أطفال"
-        rating="4.4"
-      />
-      <DoctorCard
-        image="/path-to-image.jpg"
-        name="د/ سلمى يونس"
-        specialization="استشارية نسائية"
-        rating="4.9"
-      />
-      <DoctorCard
-        image="/path-to-image.jpg"
-        name="د/ مازن عبد الله"
-        specialization="استشاري مسالك بولية"
-        rating="4.3"
-      />
-      <DoctorCard
-        image="/path-to-image.jpg"
-        name="د/ هدى سمير"
-        specialization="استشارية باطنية"
-        rating="4.7"
-      />
-      <DoctorCard
-        image="/path-to-image.jpg"
-        name="د/ رائد مصطفى"
-        specialization="استشاري عيون"
-        rating="4.5"
-      />
-      <DoctorCard
-        image="/path-to-image.jpg"
-        name="د/ نور الهدى"
-        specialization="استشارية نفسية"
-        rating="4.6"
-      />
-      <DoctorCard
-        image="/path-to-image.jpg"
-        name="د/ سامر توفيق"
-        specialization="استشاري أنف وأذن وحنجرة"
-        rating="4.4"
-      />
-      <DoctorCard
-        image="/path-to-image.jpg"
-        name="د/ منى عبد العزيز"
-        specialization="استشارية أسنان"
-        rating="4.8"
-      />
+      {doctors.map((item) => {
+        const doctor = item.doctor.doctorPersonalInfo;
+        const specialization =
+          item.additionalData.arabicSpecialization || "غير محدد";
+        const rating = doctor.averageRating || "0";
+
+        return (
+          <DoctorCard
+            key={doctor.userId}
+            name={doctor.arabicName || "غير متوفر"}
+            specialization={specialization}
+            rating={rating}
+            image={doctor.userImage}
+          />
+        );
+      })}
     </div>
   );
 };
