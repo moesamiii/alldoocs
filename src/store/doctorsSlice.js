@@ -1,17 +1,22 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const fetchDoctors = createAsyncThunk(
-  "doctors/fetchDoctors",
-  async (_, thunkAPI) => {
-    try {
-      const response = await axios.get(
-        "https://newulmmed.com/api/Doctor/GetAllDoctors?pageNumber=1&pageSize=10"
-      );
-      return response.data.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
+// جلب كل الأطباء (بدون فلتر)
+const fetchDoctors = createAsyncThunk("doctors/fetchAll", async () => {
+  const response = await axios.get(
+    "https://test.newulmmed.com/api/Doctor/GetAllDoctors"
+  );
+  return response.data.data;
+});
+
+// ✅ جلب الأطباء حسب التخصص
+const fetchDoctorsBySpecialization = createAsyncThunk(
+  "doctors/fetchBySpecialization",
+  async (specializationId) => {
+    const response = await axios.get(
+      `https://test.newulmmed.com/api/Doctor/GetAllDoctors?specializationId=${specializationId}`
+    );
+    return response.data.data;
   }
 );
 
@@ -35,9 +40,25 @@ const doctorsSlice = createSlice({
       })
       .addCase(fetchDoctors.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = action.error.message;
+      })
+
+      .addCase(fetchDoctorsBySpecialization.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchDoctorsBySpecialization.fulfilled, (state, action) => {
+        state.loading = false;
+        state.doctors = action.payload;
+      })
+      .addCase(fetchDoctorsBySpecialization.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
 });
+
+// ✅ التصدير الصحيح
+export { fetchDoctors, fetchDoctorsBySpecialization };
 
 export default doctorsSlice.reducer;

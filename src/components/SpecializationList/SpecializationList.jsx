@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchSpecializations } from "../../store/specializationSlice";
 import {
-  fetchSpecializations,
-  fetchSpecializationById,
-} from "../../store/specializationSlice";
+  fetchDoctorsBySpecialization,
+  fetchDoctors,
+} from "../../store/doctorsSlice";
 
 const SpecializationList = () => {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ const SpecializationList = () => {
 
   useEffect(() => {
     dispatch(fetchSpecializations());
+    dispatch(fetchDoctors()); // تحميل كل الأطباء عند أول تشغيل
   }, [dispatch]);
 
   return (
@@ -29,9 +31,10 @@ const SpecializationList = () => {
         overflow-y-auto
       "
     >
+      {/* زر الكل */}
       <button
         className="w-[198px] h-[40px] bg-[#F3FAFE] rounded-[8px] flex items-center justify-between px-3 mb-2"
-        onClick={() => dispatch(fetchSpecializationById(0))} // أو reset حسب الحاجة
+        onClick={() => dispatch(fetchDoctors())}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -62,7 +65,7 @@ const SpecializationList = () => {
         ? list.map((item) => (
             <div
               key={item.id}
-              onClick={() => dispatch(fetchSpecializationById(item.id))}
+              onClick={() => dispatch(fetchDoctorsBySpecialization(item.id))}
               className="w-full border border-[#FEFEFE]/0 hover:border-[#FEFEFE] rounded-[8px] p-2 flex flex-row-reverse items-center gap-[6px] cursor-pointer"
             >
               <img
