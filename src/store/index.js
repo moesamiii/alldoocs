@@ -12,6 +12,7 @@ const store = configureStore({
 });
 
 //  الحصول على ال معلومات لما اشغل التطبيق
+
 export function initializeStoreData() {
   store.dispatch(fetchDoctors());
   store.dispatch(fetchSpecializations());

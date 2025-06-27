@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSpecializations } from "../../store/specializationSlice";
+import {
+  fetchSpecializations,
+  fetchSpecializationById,
+} from "../../store/specializationSlice";
 
 const SpecializationList = () => {
   const dispatch = useDispatch();
@@ -26,7 +29,10 @@ const SpecializationList = () => {
         overflow-y-auto
       "
     >
-      <button className="w-[198px] h-[40px] bg-[#F3FAFE] rounded-[8px] flex items-center justify-between px-3">
+      <button
+        className="w-[198px] h-[40px] bg-[#F3FAFE] rounded-[8px] flex items-center justify-between px-3 mb-2"
+        onClick={() => dispatch(fetchSpecializationById(0))} // أو reset حسب الحاجة
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="w-4 h-4 text-[#0798F1]"
@@ -56,6 +62,7 @@ const SpecializationList = () => {
         ? list.map((item) => (
             <div
               key={item.id}
+              onClick={() => dispatch(fetchSpecializationById(item.id))}
               className="w-full border border-[#FEFEFE]/0 hover:border-[#FEFEFE] rounded-[8px] p-2 flex flex-row-reverse items-center gap-[6px] cursor-pointer"
             >
               <img

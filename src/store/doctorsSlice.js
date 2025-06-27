@@ -6,7 +6,7 @@ export const fetchDoctors = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await axios.get(
-        "https://test.newulmmed.com/api/Doctor/GetAllDoctors?pageNumber=1&pageSize=10"
+        "https://newulmmed.com/api/Doctor/GetAllDoctors?pageNumber=1&pageSize=10"
       );
       return response.data.data;
     } catch (error) {
