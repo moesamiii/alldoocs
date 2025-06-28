@@ -10,7 +10,7 @@ const DoctorCard = ({
 }) => {
   // ✅ Swap this line
   const textAlign =
-    language === "ar" ? "text-left items-start" : "text-right items-end";
+    language === "ar" ? "text-left items-start" : "text-left items-start";
 
   return (
     <div className="w-[240px] flex flex-col gap-2">
