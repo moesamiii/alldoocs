@@ -3,15 +3,15 @@ import specializationReducer, {
   fetchSpecializations,
 } from "./specializationSlice";
 import doctorsReducer, { fetchDoctors } from "./doctorsSlice";
+import languageReducer from "./languageSlice"; //
 
 const store = configureStore({
   reducer: {
     specializations: specializationReducer,
     doctors: doctorsReducer,
+    language: languageReducer, //
   },
 });
-
-//  الحصول على ال معلومات لما اشغل التطبيق
 
 export function initializeStoreData() {
   store.dispatch(fetchDoctors());

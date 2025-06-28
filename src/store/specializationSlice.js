@@ -12,7 +12,7 @@ export const fetchSpecializations = createAsyncThunk(
   }
 );
 
-// ✅ جلب تخصص واحد حسب ID
+//  اذا بدي اجيب تخصص واحد
 export const fetchSpecializationById = createAsyncThunk(
   "specializations/fetchById",
   async (id) => {
@@ -29,7 +29,7 @@ const specializationSlice = createSlice({
     list: [],
     loading: false,
     error: null,
-    selected: null, // التخصص الحالي من API
+    selected: null, // التخصص الحالي من api
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -47,7 +47,7 @@ const specializationSlice = createSlice({
         state.error = action.error.message;
       })
 
-      // ✅ حالة تحميل تخصص واحد
+      // تحميل تخصص
       .addCase(fetchSpecializationById.pending, (state) => {
         state.loading = true;
         state.error = null;

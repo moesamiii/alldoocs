@@ -4,37 +4,45 @@ import DoctorCard from "../DoctorCard/DoctorCard";
 
 const DoctorsList = () => {
   const { doctors, loading, error } = useSelector((state) => state.doctors);
+  const currentLang = useSelector((state) => state.language.current);
 
   if (loading) {
-    return <div className="text-center">جارٍ التحميل...</div>;
+    return (
+      <div className="text-center">
+        {currentLang === "en" ? "Loading..." : "جارٍ التحميل..."}
+      </div>
+    );
   }
 
   if (error) {
-    return <div className="text-center text-red-500">حدث خطأ: {error}</div>;
+    return (
+      <div className="text-center text-red-500">
+        {currentLang === "en" ? `Error: ${error}` : `حدث خطأ: ${error}`}
+      </div>
+    );
   }
 
   return (
-    <div
-      className="
-        grid 
-        grid-cols-1 
-        sm:grid-cols-2 
-        md:grid-cols-3 
-        lg:grid-cols-4 
-        gap-[36px] 
-        w-full
-      "
-    >
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[36px] w-full">
       {doctors.map((item) => {
         const doctor = item.doctor.doctorPersonalInfo;
+
+        const name =
+          currentLang === "en"
+            ? doctor.englishName || "Name not available"
+            : doctor.arabicName || "الاسم غير متوفر";
+
         const specialization =
-          item.additionalData.arabicSpecialization || "غير محدد";
+          currentLang === "en"
+            ? item.additionalData?.englishSpecialization || "Not specified"
+            : item.additionalData?.arabicSpecialization || "غير محدد";
+
         const rating = doctor.averageRating || "0";
 
         return (
           <DoctorCard
             key={doctor.userId}
-            name={doctor.arabicName || "غير متوفر"}
+            name={name}
             specialization={specialization}
             rating={rating}
             image={doctor.userImage}

@@ -14,7 +14,7 @@ const SpecializationList = () => {
 
   useEffect(() => {
     dispatch(fetchSpecializations());
-    dispatch(fetchDoctors()); // تحميل كل الأطباء عند أول تشغيل
+    dispatch(fetchDoctors()); // نعمل loading لكل الاطباء لما يبلش التشغيل
   }, [dispatch]);
 
   return (

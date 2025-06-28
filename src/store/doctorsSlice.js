@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// جلب كل الأطباء (بدون فلتر)
+// this for get all doctors without filtering
 const fetchDoctors = createAsyncThunk("doctors/fetchAll", async () => {
   const response = await axios.get(
     "https://test.newulmmed.com/api/Doctor/GetAllDoctors"
@@ -9,7 +9,7 @@ const fetchDoctors = createAsyncThunk("doctors/fetchAll", async () => {
   return response.data.data;
 });
 
-// ✅ جلب الأطباء حسب التخصص
+// in this code this is the way to get doctor depend on his spepcialization
 const fetchDoctorsBySpecialization = createAsyncThunk(
   "doctors/fetchBySpecialization",
   async (specializationId) => {
@@ -58,7 +58,7 @@ const doctorsSlice = createSlice({
   },
 });
 
-// ✅ التصدير الصحيح
+//  this is the good wat to export it
 export { fetchDoctors, fetchDoctorsBySpecialization };
 
 export default doctorsSlice.reducer;
