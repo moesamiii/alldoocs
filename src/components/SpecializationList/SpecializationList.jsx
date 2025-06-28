@@ -11,7 +11,8 @@ const SpecializationList = () => {
   const { list, loading, error } = useSelector(
     (state) => state.specializations
   );
-  const currentLang = useSelector((state) => state.language.current); // ar or en
+  const currentLang = useSelector((state) => state.language.current);
+  const isArabic = currentLang === "ar";
 
   useEffect(() => {
     dispatch(fetchSpecializations());
@@ -55,7 +56,7 @@ const SpecializationList = () => {
           className="text-[#0798F1] font-medium text-[18px] leading-[14px] tracking-[-0.5px]"
           style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}
         >
-          {currentLang === "en" ? "All" : "الكل"}
+          {isArabic ? "الكل" : "All"}
         </span>
       </button>
 
@@ -64,24 +65,28 @@ const SpecializationList = () => {
 
       {Array.isArray(list) && list.length > 0
         ? list.map((item) => {
-            const name = currentLang === "en" ? item.en_Name : item.ar_Name;
+            const name = isArabic ? item.ar_Name : item.en_Name;
+
             return (
               <div
                 key={item.id}
                 onClick={() => dispatch(fetchDoctorsBySpecialization(item.id))}
-                className="w-full border border-[#FEFEFE]/0 hover:border-[#FEFEFE] rounded-[8px] p-2 flex flex-row-reverse items-center gap-[6px] cursor-pointer"
+                className={`w-full border border-[#FEFEFE]/0 hover:border-[#FEFEFE] rounded-[8px] p-2 flex items-center cursor-pointer gap-2`}
               >
+                {/** ✅ Keep image always at start (left in LTR, right in RTL) */}
                 <img
                   src={item.logo}
                   alt={name}
                   className="w-6 h-6 object-contain"
                 />
+
                 <span
-                  className="text-white text-sm truncate"
+                  className={`text-white text-sm truncate flex-1 ${
+                    isArabic ? "text-right" : "text-left"
+                  }`}
                   style={{
-                    maxWidth: "160px",
-                    direction: currentLang === "en" ? "ltr" : "rtl",
-                    textAlign: currentLang === "en" ? "left" : "right",
+                    direction: isArabic ? "rtl" : "ltr",
+                    fontFamily: '"IBM Plex Sans Arabic", sans-serif',
                   }}
                   title={name}
                 >

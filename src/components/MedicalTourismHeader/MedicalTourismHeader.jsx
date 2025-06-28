@@ -14,22 +14,25 @@ const MedicalTourismHeader = () => {
       <div className="w-full hidden lg:flex justify-between items-center px-10 py-6">
         {/* right back and title */}
         <div className="flex flex-col items-end gap-2">
+          {/* الرجوع section */}
           <div className="flex items-center gap-2 cursor-pointer">
-            <span
-              className="text-[18px] font-medium leading-[1.2] bg-gradient-to-t from-[#6F6F6F] to-[#6F6F6F] bg-clip-text text-transparent"
-              style={{ fontFamily: "IBM Plex Sans Arabic" }}
-            >
-              الرجوع
-            </span>
             <img
               src={arrowImage}
               alt="Arrow Right"
               className="w-[12px] h-[24px] object-contain rotate-[270deg]"
             />
+            <span
+              className="text-[18px] font-medium leading-[1.2] text-[#6F6F6F]"
+              style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}
+            >
+              الرجوع
+            </span>
           </div>
+
+          {/* الأطباء title */}
           <h1
             className="text-[24px] font-semibold leading-[100%] text-[#222222]"
-            style={{ fontFamily: "IBM Plex Sans Arabic" }}
+            style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}
           >
             الأطباء
           </h1>
