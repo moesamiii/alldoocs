@@ -1,26 +1,32 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import Navbar from "./components/Navbar/Navbar";
 import MedicalTourismHeader from "./components/MedicalTourismHeader/MedicalTourismHeader";
 import SpecializationList from "./components/SpecializationList/SpecializationList";
 import DoctorsList from "./components/DoctorsList/DoctorsList";
-import LanguageSwitcher from "./components/LanguageSwitcher/LanguageSwitcher";
 
 const App = () => {
+  const currentLang = useSelector((state) => state.language.current);
+  const isArabic = currentLang === "ar";
+
   return (
     <>
       <Navbar />
       <MedicalTourismHeader />
 
       <div className="flex justify-center mt-4">
-        <div className="flex flex-row-reverse gap-4 max-w-[1440px] w-full px-4">
-          {/* rtl */}
-          <SpecializationList />
-
-          {/* الاطباء و اسمائهم بلغتين مختلفة */}
+        <div
+          className={`flex ${
+            isArabic ? "flex-row-reverse" : "flex-row"
+          } gap-4 max-w-[1440px] w-full px-4`}
+        >
+          {/*  docs section */}
           <div className="flex-1">
-            <LanguageSwitcher />
             <DoctorsList />
           </div>
+
+          {/* special bar flex dir */}
+          <SpecializationList />
         </div>
       </div>
     </>
