@@ -23,7 +23,7 @@ const DoctorsList = () => {
   }
 
   return (
-    <div className="w-full flex justify-center mt-[80px]">
+    <div className="w-full flex justify-center ">
       <div className="grid grid-cols-4 gap-[24px] w-[1008px]">
         {doctors.map((item) => {
           const doctor = item.doctor.doctorPersonalInfo;
