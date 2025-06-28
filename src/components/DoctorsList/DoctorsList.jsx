@@ -23,7 +23,7 @@ const DoctorsList = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[36px] w-full">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[36px] w-[1008] h-[1279px]">
       {doctors.map((item) => {
         const doctor = item.doctor.doctorPersonalInfo;
 
