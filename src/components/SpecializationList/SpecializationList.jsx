@@ -11,10 +11,11 @@ const SpecializationList = () => {
   const { list, loading, error } = useSelector(
     (state) => state.specializations
   );
+  const currentLang = useSelector((state) => state.language.current); // ar or en
 
   useEffect(() => {
     dispatch(fetchSpecializations());
-    dispatch(fetchDoctors()); // نعمل loading لكل الاطباء لما يبلش التشغيل
+    dispatch(fetchDoctors());
   }, [dispatch]);
 
   return (
@@ -31,7 +32,7 @@ const SpecializationList = () => {
         overflow-y-auto
       "
     >
-      {/* زر الكل */}
+      {/* All Button */}
       <button
         className="w-[198px] h-[40px] bg-[#F3FAFE] rounded-[8px] flex items-center justify-between px-3 mb-2"
         onClick={() => dispatch(fetchDoctors())}
@@ -54,7 +55,7 @@ const SpecializationList = () => {
           className="text-[#0798F1] font-medium text-[18px] leading-[14px] tracking-[-0.5px]"
           style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}
         >
-          الكل
+          {currentLang === "en" ? "All" : "الكل"}
         </span>
       </button>
 
@@ -62,20 +63,33 @@ const SpecializationList = () => {
       {error && <p className="text-red-500 text-center">خطأ: {error}</p>}
 
       {Array.isArray(list) && list.length > 0
-        ? list.map((item) => (
-            <div
-              key={item.id}
-              onClick={() => dispatch(fetchDoctorsBySpecialization(item.id))}
-              className="w-full border border-[#FEFEFE]/0 hover:border-[#FEFEFE] rounded-[8px] p-2 flex flex-row-reverse items-center gap-[6px] cursor-pointer"
-            >
-              <img
-                src={item.logo}
-                alt={item.ar_Name}
-                className="w-6 h-6 object-contain"
-              />
-              <span className="text-white text-sm">{item.ar_Name}</span>
-            </div>
-          ))
+        ? list.map((item) => {
+            const name = currentLang === "en" ? item.en_Name : item.ar_Name;
+            return (
+              <div
+                key={item.id}
+                onClick={() => dispatch(fetchDoctorsBySpecialization(item.id))}
+                className="w-full border border-[#FEFEFE]/0 hover:border-[#FEFEFE] rounded-[8px] p-2 flex flex-row-reverse items-center gap-[6px] cursor-pointer"
+              >
+                <img
+                  src={item.logo}
+                  alt={name}
+                  className="w-6 h-6 object-contain"
+                />
+                <span
+                  className="text-white text-sm truncate"
+                  style={{
+                    maxWidth: "160px",
+                    direction: currentLang === "en" ? "ltr" : "rtl",
+                    textAlign: currentLang === "en" ? "left" : "right",
+                  }}
+                  title={name}
+                >
+                  {name}
+                </span>
+              </div>
+            );
+          })
         : !loading &&
           !error && <p className="text-white text-center">لا توجد بيانات</p>}
     </div>
